@@ -32,20 +32,36 @@ function addDecimal() {
     }
 }
 
+// Calculate values
+const calculate = {
+    '/': (firstNumber, secondNumber) => firstNumber / secondNumber,
+    '*': (firstNumber, secondNumber) => firstNumber * secondNumber,
+    '+': (firstNumber, secondNumber) => firstNumber + secondNumber,
+    '-': (firstNumber, secondNumber) => firstNumber - secondNumber,
+    '=': (firstNumber, secondNumber) => secondNumber,
+};
+
 function useOperator(operator){
     const currentValue = Number(calculatorDisplay.textContent);
+    // Prevent multiple operators
+    if(operatorValue && awaitingNextValue) {
+        operatorValue = operator;
+        return;
+    }
     //assign first value if no value already exists
     if(!firstValue) {
         firstValue = currentValue;
         operatorValue = operator;
         
     } else{
-        console.log('current value ', currentValue);
+        console.log(firstValue,operatorValue, currentValue);
+        const calculation = calculate[operatorValue](firstValue, currentValue);
+        calculatorDisplay.textContent = calculation;
+        firstValue = calculation;
     }
     // once operator is clicked like + or - etc, store the operator value and get ready for storing the  next value
     awaitingNextValue = true;
-    console.log('fisrt value', firstValue);
-    console.log("operator", operator);
+    
 
 }
 // adding event listeners
