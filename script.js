@@ -6,10 +6,16 @@ function sendNumberValue(number) {
     // calculatorDisplay.textContent = number;
     // if current display value is 0, replace it, else append number to the end
     const displayValue = calculatorDisplay.textContent;
-    calculatorDisplay.textcontent = displayValue === '0' ? number : displayValue + number;
+    calculatorDisplay.textContent = displayValue === '0' ? number : displayValue + number;
 }
 
-// adding evet listeners
+function addDecimal() {
+    // if no decimal add one
+    if(!calculatorDisplay.textContent.includes('.')) {
+        calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`;
+    }
+}
+// adding event listeners
 inputBtns.forEach((inputBtn) => {
     if(inputBtn.classList.length === 0) {
         inputBtn.addEventListener('click', () =>  sendNumberValue(inputBtn.value));
@@ -18,7 +24,15 @@ inputBtns.forEach((inputBtn) => {
         inputBtn.addEventListener('click', () =>  sendNumberValue(inputBtn.value));
     }
     else if (inputBtn.classList.contains('decimal')){
-        inputBtn.addEventListener('click', () => sendNumberValue(inputBtn.value));
+        inputBtn.addEventListener('click', () => addDecimal());
     }
 
 });
+
+// Reset Display
+
+function resetAll() {
+    calculatorDisplay.textContent = "0";
+}
+// Event listner
+clearBtn.addEventListener('click', resetAll);
